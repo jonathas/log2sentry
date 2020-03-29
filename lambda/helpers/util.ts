@@ -12,6 +12,15 @@ class Util {
     public static isString(obj: unknown): boolean {
         return Object.prototype.toString.call(obj) === "[object String]";
     }
+
+    public static parseObject(obj: any): any {
+        try {
+            const parsed = JSON.parse(obj);
+            return parsed;
+        } catch (err) {
+            return obj;
+        }
+    }
 }
 
 export default Util;

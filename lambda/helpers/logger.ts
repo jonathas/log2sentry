@@ -4,12 +4,15 @@ const log = pino();
 import Util from "./util";
 
 class Logger {
-    init(name: string, version: string, environment: string): void {
-        sentry.init({
+    init(name: string, version: string, environment?: string): void {
+        const config = {
             dsn: process.env.SENTRY_DSN,
-            release: `${name}@${version}`,
-            environment
-        });
+            release: `${name}@${version}`
+        };
+        if (environment) {
+            config["environment"] = environment;
+        }
+        sentry.init(config);
         this.clearScope();
     }
 
@@ -52,9 +55,10 @@ class Logger {
         await sentry.flush();
     }
 
-    public async logToSentry(event: sentry.Event): Promise<void> {
-        sentry.captureEvent(event);
+    public async logToSentry(message: string, level: sentry.Severity): Promise<string> {
+        const eventId = sentry.captureMessage(message, level);
         await sentry.flush();
+        return eventId;
     }
 }
 
