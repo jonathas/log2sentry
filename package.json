@@ -1,0 +1,51 @@
+{
+  "name": "log2sentry",
+  "version": "0.0.1",
+  "description": "Lambda for logging an Exception to Sentry",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --coverage --noStackTrace --watchAll",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts",
+    "release": "release-it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathas/log2sentry.git"
+  },
+  "keywords": [
+    "log2sentry",
+    "sentry",
+    "lambda",
+    "aws"
+  ],
+  "author": "Jon Ribeiro <contact@jonathas.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/aws-lambda": "^8.10.46",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.5",
+    "@types/pino": "^5.17.0",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "auto-changelog": "^1.16.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-security": "^1.4.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.4",
+    "release-it": "^13.5.0",
+    "ts-jest": "^25.2.1",
+    "ts-node": "^8.8.1",
+    "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

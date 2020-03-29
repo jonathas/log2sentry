@@ -1,0 +1,38 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "security",
+        "jest"
+    ],
+    "env": {
+        "node": true,
+        "es6": true,
+        "jest/globals": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:security/recommended",
+        "plugin:jest/recommended"
+    ],
+    "rules": {
+        "@typescript-eslint/no-parameter-properties": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "security/detect-object-injection": 0,
+        "no-console": "off",
+        "no-var": "error",
+        "quotes": "error",
+        "semi":"warn",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
+        "jest/no-try-expect": 0
+    }
+}

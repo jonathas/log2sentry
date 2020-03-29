@@ -1,0 +1,14 @@
+{
+  "name": "log2sentry",
+  "version": "0.0.1",
+  "description": "Lambda for logging an Exception to Sentry",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathas/log2sentry.git"
+  },
+  "author": "Jon Ribeiro <contact@jonathas.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "scripts": {}
+}
