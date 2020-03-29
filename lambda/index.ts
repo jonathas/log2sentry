@@ -22,7 +22,7 @@ export const handler = async (event: APIGatewayEvent, context: APIGatewayEventRe
     try {
         const handler = new Log2Sentry(event, context);
         const res = await handler.run();
-        return new LambdaResponse(HttpCode.CREATED, JSON.stringify({res}));
+        return new LambdaResponse(HttpCode.CREATED, JSON.stringify(res));
     } catch (err) {
         if (err instanceof LambdaResponse) {
             return err;
