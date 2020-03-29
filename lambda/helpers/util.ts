@@ -8,6 +8,10 @@ class Util {
         const data = JSON.parse(event.body);
         return data;
     }
+
+    public static isString(obj: unknown): boolean {
+        return Object.prototype.toString.call(obj) === "[object String]";
+    }
 }
 
 export default Util;

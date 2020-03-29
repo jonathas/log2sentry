@@ -9,6 +9,9 @@
   },
   "author": "Jon Ribeiro <contact@jonathas.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@sentry/node": "^5.15.4",
+    "pino": "^6.0.0"
+  },
   "scripts": {}
 }
