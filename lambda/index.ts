@@ -15,18 +15,17 @@ global.__rootdir__ = __dirname || process.cwd();
 
 import { APIGatewayEvent, APIGatewayProxyResult, APIGatewayEventRequestContext } from "aws-lambda";
 import Log2Sentry from "./Log2Sentry";
-import LambdaResponse from "./dto/lambda-response";
 import { HttpCode } from "./dto/http-codes";
 
 export const handler = async (event: APIGatewayEvent, context: APIGatewayEventRequestContext): Promise<APIGatewayProxyResult> => {
     try {
         const handler = new Log2Sentry(event, context);
         const res = await handler.run();
-        return new LambdaResponse(HttpCode.CREATED, JSON.stringify(res));
+        return { statusCode: HttpCode.CREATED, body: JSON.stringify(res) };
     } catch (err) {
-        if (err instanceof LambdaResponse) {
+        if (err.statusCode) {
             return err;
         }
-        return new LambdaResponse(HttpCode.INTERNAL_ERROR, JSON.stringify({ message: err.message }));
+        return { statusCode: HttpCode.INTERNAL_ERROR, body: JSON.stringify({ message: err.message })};
     }
 };

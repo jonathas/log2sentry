@@ -1,6 +1,5 @@
 import { APIGatewayEvent, APIGatewayEventRequestContext } from "aws-lambda";
 import Util from "./helpers/util";
-import LambdaResponse from "./dto/lambda-response";
 import { HttpCode } from "./dto/http-codes";
 import Logger from "./helpers/logger";
 import { Log2SentryRequest } from "./interfaces";
@@ -29,13 +28,16 @@ class Log2Sentry {
             return { eventId };
         } catch (err) {
             await Logger.error(err);
-            throw new LambdaResponse(HttpCode.BAD_REQUEST, JSON.stringify({ message: err.message }));
+            throw { statusCode: HttpCode.BAD_REQUEST, body: JSON.stringify({ message: err.message }) };
         }
     }
 
     private validate(payload: Log2SentryRequest): void {
         if (!payload) {
             throw new Error("The payload cannot be empty");
+        }
+        if (!payload.message || !payload.level) {
+            throw new Error("You need to inform a message and a level");
         }
     }
 
