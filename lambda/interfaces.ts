@@ -18,11 +18,10 @@ export interface Tag {
 }
 
 export interface Breadcrumb {
-    type: string;
     level: sentry.Severity;
     category: string;
     message: string;
-    data: string;
+    data: any;
 }
 
 export interface Log2SentryRequest {

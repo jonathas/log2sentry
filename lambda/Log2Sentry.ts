@@ -15,11 +15,11 @@ class Log2Sentry {
     }
 
     public async run(): Promise<any> {
+        const payload = Util.parseBody(this.event) as unknown as Log2SentryRequest;
         try {
-            const payload = Util.parseBody(this.event) as unknown as Log2SentryRequest;
-            this.validate(payload);
-
             this.initSentry(payload);
+            this.validateRequest(payload);
+            
             this.setUser(payload);
             this.setTags(payload);
             this.setBreadcrumbs(payload);
@@ -27,27 +27,36 @@ class Log2Sentry {
             const eventId = await Logger.logToSentry(payload.message, payload.level);
             return { eventId };
         } catch (err) {
-            await Logger.error(err);
+            if (process.env.SENTRY_DSN && payload.release && payload.release.name) {
+                await Logger.error(err);
+            }
             throw { statusCode: HttpCode.BAD_REQUEST, body: JSON.stringify({ message: err.message }) };
         }
     }
 
-    private validate(payload: Log2SentryRequest): void {
-        if (!payload) {
-            throw new Error("The payload cannot be empty");
-        }
+    private validateRequest(payload: Log2SentryRequest): void {
         if (!payload.message || !payload.level) {
             throw new Error("You need to inform a message and a level");
         }
     }
 
     private initSentry(payload: Log2SentryRequest): void {
+        this.validateInit(payload);
         if (payload.release && payload.release.name && payload.release.version) {
             if (payload.environment) {
                 Logger.init(payload.release.name, payload.release.version, payload.environment);
             } else {
                 Logger.init(payload.release.name, payload.release.version);
             }
+        }
+    }
+
+    private validateInit(payload: Log2SentryRequest): void {
+        if (!payload) {
+            throw new Error("The payload cannot be empty");
+        }
+        if (!payload.release || !payload.release.name || !payload.release.version) {
+            throw new Error("You need to inform the release object");
         }
     }
 
@@ -67,11 +76,10 @@ class Log2Sentry {
         if (payload.breadcrumbs && payload.breadcrumbs.length > 0) {
             payload.breadcrumbs.forEach(b =>
                 Logger.addBreadcrumb({
-                    type: b.type,
                     level: b.level,
                     category: b.category,
                     message: b.message,
-                    data: Util.parseObject(b.data)
+                    data: b.data
                 })
             );
         }
