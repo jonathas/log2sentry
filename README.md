@@ -8,6 +8,5 @@ TODO:
 
 - Improve this README
 - Create a config script, to config the deployment according to an AWS profile and bucket name
-- Create a request in Postman, export it and add it to the repository
 - Create documentation on OpenAPI / Swagger format
 - Write tests
