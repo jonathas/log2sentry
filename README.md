@@ -4,18 +4,35 @@ Lambda for logging an Exception to Sentry.
 
 If Sentry doesn't provide an SDK for your programming language or framework, you can capture the exception and send it to this lambda, which is able to forward it to Sentry.
 
+## Dependencies
+
+- [Docker](https://www.docker.com/)
+- [yarn](https://yarnpkg.com/lang/en/)
+- Node.js v10.15.3 (install using [nvm](https://github.com/nvm-sh/nvm))
+- [AWS CLI](https://aws.amazon.com/cli/)
+- [AWS SAM CLI](https://aws.amazon.com/serverless/sam/)
+
 ## Initial setup
 
-Run the wizard to configure it according to your needs:
+Install the packages:
 
 ```bash
-ts-node ./config.ts
+yarn
 ```
+
+Run the wizard to configure the project according to your needs:
+
+```bash
+yarn setup
+```
+
+![Config](./docs/config.png)
 
 ## Configuration on AWS
 
-- Deploy your lambda and configure a POST endpoint pointing to it on API Gateway
+- Create your lambda on AWS and configure a POST endpoint pointing to it on API Gateway
 - In "Environment variables" in the lambda configuration, add the SENTRY_DSN variable with your Sentry DSN as its value.
+- Deploy your lambda by running: "yarn deploy"
 
 ## Usage
 
@@ -23,30 +40,30 @@ The payload you send must be in the following format:
 
 ```javascript
 {
-	"release": {
-		"name": "myAppsReleaseName",
-		"version": "1.0.0"
-	},
-	"environment": "production",
-	"message": "This is my error",
-	"level": "error",
-	"user": {
-		"id": "1234",
-		"ip_address": "127.0.0.1",
-		"email": "myemail@email.com",
-		"username": "Keanu Reeves"
-	},
-	"tags": [
-		{ "name": "mytag01", "value": "1234" }
-	],
-	"breadcrumbs": [
-		{
-			"level": "info",
-			"category": "mycategory",
-			"message": "In this part of the app, this is what happened",
-			"data": {"this":"is a test"}
-		}
-	]
+    "release": {
+        "name": "myAppsReleaseName",
+        "version": "1.0.0"
+    },
+    "environment": "production",
+    "message": "This is my error",
+    "level": "error",
+    "user": {
+        "id": "1234",
+        "ip_address": "127.0.0.1",
+        "email": "myemail@email.com",
+        "username": "Keanu Reeves"
+    },
+    "tags": [
+        { "name": "mytag01", "value": "1234" }
+    ],
+    "breadcrumbs": [
+        {
+            "level": "info",
+            "category": "mycategory",
+            "message": "In this part of the app, this is what happened",
+            "data": {"this":"is a test"}
+        }
+    ]
 }
 ```
 
