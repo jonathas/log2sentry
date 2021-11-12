@@ -70,7 +70,7 @@ The payload you send must be in the following format:
 
 Required attributes: release, environment, message, level.
 
-- The dsn attribute is optional. If it's not informed, the payload is still valid. If it is informed, it will only be used if no SENTRY_DSN value is configured as enviornment variable in the lambda. The implementation was done this way so that the deployed lambda is used for only 1 project at a time and runtime costs are better controlled.
+- The dsn attribute is optional. If it's not informed, the payload is still valid. If it is informed, it will only be used if no SENTRY_DSN value is configured as environment variable in the lambda. The implementation was done this way so that the deployed lambda is used for only 1 project at a time and runtime costs are better controlled.
 - Inside release should be your app's name and version, so Sentry issues can be associated with an app release.
 - Inside environment, you can send production, staging or development, according to the environment where the app is running.
 - Level (Sentry Severity) must be one of these: fatal, error, warning, log, info, debug, critical
