@@ -1,18 +1,19 @@
 import * as sentry from "@sentry/node";
 import pino from "pino";
+import { SentryInit } from "../interfaces";
 const log = pino();
 import Util from "./util";
 
 class Logger {
-    init(name: string, version: string, environment?: string): void {
-        const config = {
-            dsn: process.env.SENTRY_DSN,
-            release: `${name}@${version}`
+    init(config: SentryInit): void {
+        const options: sentry.NodeOptions = {
+            dsn: process.env.SENTRY_DSN || config.dsn,
+            release: `${config.name}@${config.version}`
         };
-        if (environment) {
-            config["environment"] = environment;
+        if (config.environment) {
+            options["environment"] = config.environment;
         }
-        sentry.init(config);
+        sentry.init(options);
         this.clearScope();
     }
 
