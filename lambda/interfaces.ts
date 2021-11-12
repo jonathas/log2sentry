@@ -25,6 +25,7 @@ export interface Breadcrumb {
 }
 
 export interface Log2SentryRequest {
+    dsn?: string;
     release: Release;
     environment: "production | staging | development";
     message: string;
@@ -32,4 +33,11 @@ export interface Log2SentryRequest {
     user: User;
     tags: Tag[];
     breadcrumbs: Breadcrumb[];
+}
+
+export interface SentryInit {
+    name: string;
+    version: string;
+    environment?: string;
+    dsn?: string;
 }

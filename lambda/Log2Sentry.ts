@@ -2,7 +2,7 @@ import { APIGatewayEvent, APIGatewayEventRequestContext } from "aws-lambda";
 import Util from "./helpers/util";
 import { HttpCode } from "./dto/http-codes";
 import Logger from "./helpers/logger";
-import { Log2SentryRequest } from "./interfaces";
+import { Log2SentryRequest, SentryInit } from "./interfaces";
 
 class Log2Sentry {
 
@@ -42,13 +42,19 @@ class Log2Sentry {
 
     private initSentry(payload: Log2SentryRequest): void {
         this.validateInit(payload);
-        if (payload.release && payload.release.name && payload.release.version) {
-            if (payload.environment) {
-                Logger.init(payload.release.name, payload.release.version, payload.environment);
-            } else {
-                Logger.init(payload.release.name, payload.release.version);
-            }
+        const config: SentryInit = {
+            name: payload.release.name,
+            version: payload.release.version
+        };
+
+        if (payload.environment) {
+            config.environment = payload.environment;
         }
+        if (payload.dsn) {
+            config.dsn = payload.dsn;
+        }
+
+        Logger.init(config);
     }
 
     private validateInit(payload: Log2SentryRequest): void {
