@@ -34,7 +34,7 @@
   "author": "Jon Ribeiro <contact@jonathas.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
+    "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^8.3.4",
     "@types/aws-lambda": "^8.10.46",
     "@types/clear": "^0.1.0",
