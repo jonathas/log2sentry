@@ -15,11 +15,9 @@
     "invoke": "sam local invoke -e events/event.json",
     "debug": "yarn build && sam local invoke -e events/event.json --debug-port 5858",
     "validate": "sam validate",
-    "test": "jest",
-    "test:watch": "jest --coverage --noStackTrace --watchAll",
-    "test:coverage": "jest --coverage",
     "lint": "eslint . --ext .ts",
-    "release": "release-it"
+    "release": "release-it",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -50,17 +48,11 @@
     "eslint": "^8.9.0",
     "eslint-plugin-security": "^1.4.0",
     "figlet": "^1.5.0",
-    "husky": "^4.2.3",
+    "husky": "^8.0.3",
     "inquirer": "^7.3.3",
     "js-yaml": "3.13.1",
     "release-it": "^15.6.0",
     "ts-node": "^8.8.1",
     "typescript": "^3.8.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   }
 }
